@@ -31,7 +31,7 @@ Models will be trained according available data on DB and will be ensembled.
 
 Also, a GUI is also being configured (built using PyQT5) for visual assistance where you can see a live P&L graph, models training and performance and order log. Tick interval for data to be downloaded can also be configured here
 
-![GUI PIC](Capture.PNG)
+![GUI PIC](images/Capture.PNG)
 
 
 
@@ -48,4 +48,4 @@ python mainwindow.py # initialize GUI in order to start the system
 
 ```
 
-This project is also my Master thesis, which I will present in January, so regular updates will be made until then at least. 
+This project is also my Master thesis which I will present in January and as such, until then, regular updates will be made to this repo.
