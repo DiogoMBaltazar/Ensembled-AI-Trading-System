@@ -29,7 +29,7 @@ Data is retrieved using [ib_isyinc](https://github.com/erdewit/ib_insync) and [c
 
 Models will be trained according available data on DB and will be ensembled. 
 
-Also, a GUI is also being configured (built using PyQT5) for visual assistance where you can see a live P&L graph, models training and performance and order log. Tick interval for data to be downloaded can also be configured here
+Furthermore, a GUI is also being configured (built using PyQT5) for visual assistance where you can see a live P&L graph, models training and performance and order log. Tick interval for data to be downloaded can also be configured here
 
 ![GUI PIC](images/Capture.PNG)
 
