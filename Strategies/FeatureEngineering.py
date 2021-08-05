@@ -66,7 +66,7 @@ class FeatureEngineering(object):
     def more_features(self, output):
 
 
-        # Needs adjustment acording data granularity
+        # Needs adjustment according data granularity
         output['Cumulative_return_100'] = ((output['close'] / output['close'].iloc[0]) - 1) * 100
         output['Daily_return_100'] = ((output['close'] / output['close'].shift(1)) - 1) * 100
         output['High-low'] = output['high'] - output['low']
