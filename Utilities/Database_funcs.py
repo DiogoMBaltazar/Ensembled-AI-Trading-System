@@ -117,32 +117,3 @@ class Equities_Database(object):
 
 
 
-
-
-    # def retrieve(self, key):
-    #     cursor = self._db.execute('select * from {} where t1 = ?'.format(self._table), (key,))
-    #     return dict(cursor.fetchone())
-
-    # def executemany(self, many_new_data):
-    #     """add many new data to database in one go"""
-    #     self.create_table()
-    #     self.cur.executemany('INSERT INTO Crypto_Prices VALUES(?, ?, ?, ?, ?)', many_new_data) # {table_name} {figures to be inserted}
-
-    # def create_table(self):
-    #     """create a database table if it does not exist already"""
-    #     self.cur.execute('''CREATE TABLE IF NOT EXISTS jobs(title text, \
-    #                                                         job_id integer PRIMARY KEY, 
-    #                                                         company text,
-    #                                                         age integer)''')
-    # def __enter__(self):
-    #     return self
-
-    # def __exit__(self, ext_type, exc_value, traceback):
-    #     self.cursor.close()
-    #     if isinstance(exc_value, Exception):
-    #         self.connection.rollback()
-    #     else:
-    #         self.connection.commit()
-    #     self.connection.close()
-
-
