@@ -3,7 +3,7 @@ import ccxt
 from ib_insync import *
 
 API_URL = 'https://paper-api.alpaca.markets'
-API_KEY = 'PKW78ICK22FQRW32K2UZ'
+API_KEY = ''
 SECRET_KEY = '6LWnqjH154PS9VoTrImaAF0dFjjQBcRCurcaLwzC'
 
 MAIN_STOCKS_DB_FILE = r"C:\Users\User\Desktop\Tese_Desktop\Databases\Stocks.db"
@@ -20,7 +20,6 @@ EMAIL_HOST = ''
 EMAIL_PORT = 465
 
 
-
 # IB config, TWS OR IB GATEWAYS NEEDS TO BE OPEN
 
 # ib = IB()
@@ -30,13 +29,13 @@ EMAIL_PORT = 465
 # Configure at least 3 exchanges: Binance, Kraken & Bitmex
 
 bitmex   = ccxt.bitmex({  
-    'apiKey': 'YOUR_PUBLIC_API_KEY',
-    'secret': 'YOUR_SECRET_PRIVATE_KEY'
+    'apiKey': '',
+    'secret': ''
 })
 
 kraken = ccxt.kraken({
-    'apiKey': 'YOUR_PUBLIC_API_KEY',
-    'secret': 'YOUR_SECRET_PRIVATE_KEY',
+    'apiKey': '',
+    'secret': '',
 })
 
 binance = ccxt.binance({
@@ -44,18 +43,26 @@ binance = ccxt.binance({
     'secret': '',
 })
 
-# symbols = binance.fetch_tickers()
 
-# markets = binance.load_markets()
-# print(markets)
-# tickers = binance.fetch_tickers()
-# print(tickers[1])
-# result = {}
-# for i in range(0, len(tickers)):
-#     ticker = tickers[i]
-#     id = ticker['symbol']
-#     if id in binance.markets_by_id:
-#         market = binance.markets_by_id[id]
-#         symbol = market['symbol']
-#         result[symbol] = binance.parse_ticker(ticker, market)
-# print (result)
+# Reddit Auth
+
+reddit_api = praw.Reddit(
+  client_id = "",
+  client_secret = "",
+  user_agent = ""
+)
+
+
+# Twitter Auth
+
+CONSUMER_KEY = ""
+CONSUMER_SECRET = ""
+ACCESS_TOKEN = ""
+ACCESS_TOKEN_SECRET = ""
+
+# Authenticate to Twitter
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+# Create API object
+twitter_api = tweepy.API(auth)
