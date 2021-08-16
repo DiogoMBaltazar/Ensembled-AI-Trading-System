@@ -77,20 +77,18 @@ class Crypto_Database(object):
 
             for i in range(0, len(self.crypto_data)):
         
-                # print(self.pair)
-                # print(self.crypto_data)
-
                 self.dates = datetime.datetime.fromtimestamp(self.crypto_data[i][0] / 1000.0).strftime('%Y-%m-%d %H:%M:%S.%f')
                 
-                self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data = self.crypto_data[i][1], self.crypto_data[i][2], self.crypto_data[i][3], self.crypto_data[i][4], self.crypto_data[i][5]
-                # print(f"Getting 1m tick data for {self.pair}:", "Open:", self.open_data, "High:", self.high_data, "Low:", self.low_data, "Close:", self.close_data, "Volume:", self.volume_data,)
+                self.open_data, 
+                self.high_data, 
+                self.low_data, 
+                self.close_data, 
+                self.volume_data = self.crypto_data[i][1], self.crypto_data[i][2], self.crypto_data[i][3], self.crypto_data[i][4], self.crypto_data[i][5]
                 
-                # print('---------------------------------------------------------------------------------------------------------------------------------------------')
                 self.cursorCryptos.execute("""
                     INSERT INTO Crypto_Prices (crypto_id, date, open, high, low, close, volume)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """, (self.pair, self.dates, self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data))
-            
                 
                 self.connection.commit()
                     
