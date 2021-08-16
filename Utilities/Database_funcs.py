@@ -1,9 +1,10 @@
 import sys
-sys.path.insert(0, r'F:\Tese')
+sys.path.insert(0, r'F:\Ensembled-AI-Trading-System')
 
 import sqlite3
 import datetime
 import numpy as np 
+from tqdm import tqdm
 from tqdm import trange
 from pandas import DataFrame
 from Utilities.config import *
@@ -56,28 +57,44 @@ class Crypto_Database(object):
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (crypto_id, date, open, high, low, close, volume))
 
-    def insert_ohlcv(self,crypto_symbols, pair):
+    def insert_ohlcv(self,crypto_pairs):
 
-        self.crypto_symbols = crypto_symbols 
-        self.pair = pair 
+        self.crypto_pairs = crypto_pairs 
 
-        for i in trange(0, len(self.crypto_symbols)) :
-            self.dates = datetime.datetime.fromtimestamp(self.crypto_symbols[i][0] / 1000.0).strftime('%Y-%m-%d %H:%M:%S.%f')
+        self.binance = binance
+
+        limit = 5 # # tick bars
+
+
+        # TODO // Fix this 2 for loops
+        for pair in tqdm(self.crypto_pairs):
             
-            self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data = self.crypto_symbols[i][1], self.crypto_symbols[i][2], self.crypto_symbols[i][3], self.crypto_symbols[i][4], self.crypto_symbols[i][5]
-                
-            print(f"Getting 1m tick data for {self.pair}:", "Open:", self.open_data, "High:", self.high_data, "Low:", self.low_data, "Close:", self.close_data, "Volume:", self.volume_data,)
+            self.pair = pair
             
-            print('---------------------------------------------------------------------------------------------------------------------------------------------')
-            self.cursorCryptos.execute("""
-                INSERT INTO Crypto_Prices (crypto_id, date, open, high, low, close, volume)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (self.pair, self.dates, self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data))
+            self.crypto_data = self.binance.fetch_ohlcv(self.pair, "1m", limit = limit)
+            
+            print("Retrieving data for:",  self.pair)
+
+            for i in range(0, len(self.crypto_data)):
         
-        self.connection.commit()
-            
-        print('\033[94m' + f"Retrieving {len(self.crypto_symbols)} bars from Binance")
+                # print(self.pair)
+                # print(self.crypto_data)
 
+                self.dates = datetime.datetime.fromtimestamp(self.crypto_data[i][0] / 1000.0).strftime('%Y-%m-%d %H:%M:%S.%f')
+                
+                self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data = self.crypto_data[i][1], self.crypto_data[i][2], self.crypto_data[i][3], self.crypto_data[i][4], self.crypto_data[i][5]
+                # print(f"Getting 1m tick data for {self.pair}:", "Open:", self.open_data, "High:", self.high_data, "Low:", self.low_data, "Close:", self.close_data, "Volume:", self.volume_data,)
+                
+                # print('---------------------------------------------------------------------------------------------------------------------------------------------')
+                self.cursorCryptos.execute("""
+                    INSERT INTO Crypto_Prices (crypto_id, date, open, high, low, close, volume)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (self.pair, self.dates, self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data))
+            
+                
+                self.connection.commit()
+                    
+        print('\033[94m' + f"Retrieving {len(self.crypto_data)} bars from Binance")
 
 
     def delete_datapoint(self, date):
@@ -180,4 +197,3 @@ class Equities_Database(object):
     #     else:
     #         self.connection.commit()
     #     self.connection.close()
-
