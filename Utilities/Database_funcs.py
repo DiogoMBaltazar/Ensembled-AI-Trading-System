@@ -89,6 +89,7 @@ class Crypto_Database(object):
                     INSERT INTO Crypto_Prices (crypto_id, date, open, high, low, close, volume)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """, (self.pair, self.dates, self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data))
+            
                 
                 self.connection.commit()
                     
@@ -157,13 +158,16 @@ class Crypto_Database(object):
 
 
 # =============================================================================================
+# =============================================================================================
 
-class Equities_Database(object):
+
+
+class Stocks_Database(object):
 
     def __init__(self):
         """Initialize db class variables"""
         
-        DB_LOCATION = MAIN_EQUITIES_DB_FILE # TODO // set this to be dynamic
+        DB_LOCATION = MAIN_STOCKS_DB_FILE # TODO // set this to be dynamic
         self.connection = sqlite3.connect(DB_LOCATION)
         self.connection.row_factory = sqlite3.Row
         self.cursorCryptos = self.connection.cursor()
@@ -183,10 +187,54 @@ class Equities_Database(object):
         """commit changes to database"""
         self.connection.commit()
 
-    def get_stock_tickers(self):
+    def get_symbols(self):
         self.cursorCryptos.execute("""SELECT DISTINCT ticker FROM Stocks""")
         return [item[0] for item in self.cursorCryptos.fetchall()]
 
+
+    def insert_ohlcv(self,stocks, end_datetime, duration, bar_size):
+
+        self.stocks = stocks 
+        self.end_datetime = end_datetime 
+        self.duration = duration 
+        self.bar_size = bar_size 
+
+        # self.ib = ib
+
+        limit = 5 # # tick bars
+
+
+        # TODO // Fix this 2 for loops
+        for stock in tqdm(self.stocks):
+            
+            self.stock = stock
+  
+            self.stock_data = self.ib.reqHistoricalData(
+                self.stock, endDateTime=self.end_datetime, durationStr=self.duration,
+                barSizeSetting=self.bar_size, whatToShow='TRADES', useRTH=True)
+
+
+            print("Retrieving data for:",  self.pair)
+
+            for i in range(0, len(self.stock_data)):
+        
+                self.dates = datetime.datetime.fromtimestamp(self.stock_data[i][0] / 1000.0).strftime('%Y-%m-%d %H:%M:%S.%f')
+                
+                self.open_data, 
+                self.high_data, 
+                self.low_data, 
+                self.close_data, 
+                self.volume_data = self.stock_data[i][1], self.stock_data[i][2], self.stock_data[i][3], self.stock_data[i][4], self.stock_data[i][5]
+                
+                self.cursorCryptos.execute("""
+                    INSERT INTO Stock_Prices (crypto_id, date, open, high, low, close, volume)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (self.pair, self.dates, self.open_data, self.high_data, self.low_data, self.close_data, self.volume_data))
+            
+                
+                self.connection.commit()
+                    
+        print('\033[94m' + f"Retrieving {len(self.stock_data)} bars from Binance")
 
     # def __exit__(self, ext_type, exc_value, traceback):
     #     self.cursor.close()
