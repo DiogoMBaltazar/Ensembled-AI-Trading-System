@@ -48,15 +48,6 @@ cursorStocks.execute("""
 
 
 
-
-
-
-
-
-
-
-
-
 ####################### CRYPTOS DBs ################################
 
 connectionCryptos = sqlite3.connect(config.MAIN_CRYPTOS_DB_FILE)
@@ -89,40 +80,6 @@ cursorCryptos.execute("""
         FOREIGN KEY (crypto_id) REFERENCES Cryptos (id)
     )
 """)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ####################### FUTURES DBs ################################
 
