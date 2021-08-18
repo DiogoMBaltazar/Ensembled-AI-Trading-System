@@ -14,6 +14,8 @@ def system_start():
 
     pca_model = PCA_class()
 
+    AML = AutoML()
+    
     crypto_data = Crypto_DB.get_symbol_ohlcv("ETH/USDT")
     crypto_data = Features.handling_ohlcv_and_TA_indicators(crypto_data)
     crypto_data = Features.log_returns(crypto_data)
@@ -22,6 +24,8 @@ def system_start():
 
     crypto_data = pca_model.pca(crypto_data)
 
+    crypto_data = AML.AML_model(crypto_data)
+    
     print(crypto_data)
 
 system_start()
