@@ -28,7 +28,7 @@ class AutoML(object):
 
         # Total time in seconds that the models will be training
         # Naturally, increase for performance
-        time_limit = 6
+        time_limit = 10
 
         # Provide the eval_metric if you know what metric will be used to evaluate predictions in your application. Some other non-default metrics you might use include things like: 'f1' (for binary classification), 'roc_auc' (for binary classification), 'log_loss' (for classification), 'mean_absolute_error' (for regression), 'median_absolute_error' (for regression). 
         # You can also define your own custom metric function, see examples in the folder: autogluon/core/metrics/
@@ -53,7 +53,6 @@ class AutoML(object):
         remain = len(self.data) - split
 
         date = date[:remain]
-        print(date)
 
         # Splitiing the X and y into train and test datasets
         X_train, X_test = X[-split:], X[:remain]
@@ -90,9 +89,9 @@ class AutoML(object):
 
         y_pred = predictor.predict(test_data)
 
-        print(y_pred.dtype)
-
         # TODO // Configure for more than 2 outputs (-1, 1), achieved through loss function
+            #  // If more than 3 consecutive predictions are = 1 --> long signal  
+
 
         # perf = predictor.evaluate_predictions(y_true=label, y_pred=y_pred, auxiliary_metrics=True)
 
@@ -103,5 +102,9 @@ class AutoML(object):
         predictions  = pd.DataFrame()
         predictions['AutoGluon Preds'] = y_pred
         predictions['Date'] = date
+
+        print("|-------------------------------------------------------|")
+        print("|Prediction values count:")
+        print(predictions['AutoGluon Preds'].value_counts())
 
         return predictions
