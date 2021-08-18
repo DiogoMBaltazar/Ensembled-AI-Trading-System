@@ -22,7 +22,37 @@ cursorStocks.execute('''
 Stocksrows = cursorStocks.fetchall()
 symbols = [row['symbol'] for row in Stocksrows]
 
+############################ CRYPTO  #####################################
 
+
+connection = sqlite3.connect(config.MAIN_CRYPTOS_DB_FILE)
+connection.row_factory = sqlite3.Row
+
+cursorCryptos = connection.cursor()
+
+cursorCryptos.execute('''
+    SELECT symbol, name FROM Cryptos
+''')
+
+rows = cursorCryptos.fetchall()
+existing_symbols = [row['symbol'] for row in rows]
+
+crypto_symbols = binance.fetch_tickers()
+
+
+trading_crypto_pairs = array(list(crypto_symbols.keys()))
+
+# print(crypto_symbols)
+
+# CONDITION TO ONLY INSERT NEW TICKERS THAT DON'T EXIST ALREADY IN THE DB.
+
+for key in trading_crypto_pairs:
+    if key not in existing_symbols:
+        print (f"Inserting new pair {key}")
+        print ("-------------------------------")
+        cursorCryptos.execute("INSERT INTO Cryptos (symbol) VALUES (?)", (key,))
+
+connection.commit()
 
 # IBPY LIST ALL US Equities ib_insync
 
@@ -55,36 +85,3 @@ symbols = [row['symbol'] for row in Stocksrows]
 # tickers = ib.reqTickers(*contracts)
 # for ticker in tickers:
 #   print(ticker.contract.symbol, ticker.bid, ticker,ask)
-
-
-############################ CRYPTO  #####################################
-
-
-connection = sqlite3.connect(config.MAIN_CRYPTOS_DB_FILE)
-connection.row_factory = sqlite3.Row
-
-cursorCryptos = connection.cursor()
-
-cursorCryptos.execute('''
-    SELECT symbol, name FROM Cryptos
-''')
-
-rows = cursorCryptos.fetchall()
-existing_symbols = [row['symbol'] for row in rows]
-
-crypto_symbols = binance.fetch_tickers()
-
-
-trading_crypto_pairs = array(list(crypto_symbols.keys()))
-
-# print(crypto_symbols)
-
-# CONDITION TO ONLY INSERT NEW TICKERS THAT DON'T EXIST ALREADY IN THE DB.
-
-for key in trading_crypto_pairs:
-    if key not in existing_symbols:
-        print (f"Inserting new pair {key}")
-        print ("-------------------------------")
-        cursorCryptos.execute("INSERT INTO Cryptos (symbol) VALUES (?)", (key,))
-
-connection.commit()
