@@ -44,15 +44,11 @@ create_DBs.py
 populate_DBs.py
 get_prices.py # Use Windows Task Scheduler, Crontab or Docker to run this script every x interval
 
-<<<<<<< HEAD
 Main.py
 
-||||||| 0c276a3e9
 python mainwindow.py # initialize GUI in order to start the system
 
 =======
 main.py 
->>>>>>> 9e66ca23134fc58efd4da5dc0878fdb42ecb10e7
-```
 
 This project is also my Master thesis which I will present in January and as such, until then, regular updates will be made to this repo.
