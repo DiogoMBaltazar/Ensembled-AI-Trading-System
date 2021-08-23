@@ -31,7 +31,7 @@ Models will be trained according available data on DB and will be ensembled.
 
 Furthermore, a GUI is also being configured (built using PyQT5) for visual assistance where you can see a live P&L graph, models training and performance and order log. Tick interval for data to be downloaded can also be configured here
 
-![GUI PIC](images/Capture.PNG)
+![GUI PIC](images/latest_gui.PNG)
 
 
 
