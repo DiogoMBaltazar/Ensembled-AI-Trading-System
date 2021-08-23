@@ -20,12 +20,18 @@ def system_start():
 
     pca_model = PCA_class()
 
+<<<<<<< HEAD
     RF = RandomForest()
 
     AML = AutoML()
 
     FBP = FBProphet()
 
+||||||| 0c276a3e9
+=======
+    AML = AutoML()
+    
+>>>>>>> 9e66ca23134fc58efd4da5dc0878fdb42ecb10e7
     crypto_data = Crypto_DB.get_symbol_ohlcv("ETH/USDT")
     data_01 = Features.handling_ohlcv_and_TA_indicators(crypto_data)
     data_02 = Features.log_returns(data_01)
@@ -47,6 +53,14 @@ def system_start():
     end_time = datetime.datetime.now() - begin_time
     print('\033[94m' + f'This script took %s', end_time, "seconds to run")
 
+<<<<<<< HEAD
     return data_06, prophet_pred
+||||||| 0c276a3e9
+    print(crypto_data)
+=======
+    crypto_data = AML.AML_model(crypto_data)
+    
+    print(crypto_data)
+>>>>>>> 9e66ca23134fc58efd4da5dc0878fdb42ecb10e7
 
 system_start()
