@@ -27,7 +27,7 @@ System is composed by 4 folders:
 
 Data is retrieved using [ib_isyinc](https://github.com/erdewit/ib_insync) and [ccxt](https://github.com/ccxt/ccxt) which can be stored in a local SQLite3 database for further usage.
 
-Current state: Compute +80 TA indicators and ~10 other features from OHLCV data queried from SQLite DB (NLP, vol, range, order book imbalance, etc) --> Principal Component Analysis --> Ensemble[AutoGluon (ML ensemble: 52% accuracy OOS), Facebook Prophet, more to be added] 
+Current state: Compute +80 TA indicators and ~10 other features (NLP [[Twitter, StockTwits, wallstreetbets,Google Trends, yfinance news] using Blob, Vader and a Transformer model], vol, spread, order book imbalance, etc) from OHLCV data queried from SQLite DB  --> Principal Component Analysis --> Ensemble[AutoGluon (ML ensemble: 52% accuracy OOS), Facebook Prophet, more to be added] 
 
 Furthermore, a GUI is also being configured (built using PyQT5) for visual assistance where you can see a live P&L graph, models training and performance and order log. Tick interval for data to be downloaded can also be configured here
 
