@@ -39,7 +39,7 @@ Furthermore, a GUI is also being configured (built using PyQT5) for visual assis
 ### Setup
 
 ```
-webscrapingIBSite.py # Get csv file with all available tickers to trade
+first install https://sqlitebrowser.org/dl/ to assess DB and create account in respective exchanges in order to get the API key.
 create_DBs.py
 populate_DBs.py
 get_prices.py # Use Windows Task Scheduler, Crontab or Docker to run this script every x interval
